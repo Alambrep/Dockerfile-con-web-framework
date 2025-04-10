@@ -20,7 +20,7 @@ pipeline {
                     docker rm sicei-app || exit 0
 
                     echo "Removing old Docker images..."
-                    docker images -q sicei-app | xargs docker rmi -f || exit 0
+                    for /f "tokens=*" %i in ('docker images -q sicei-app') do docker rmi -f %i
 
                     echo "Running Docker container..."
                     docker run -d -p 3000:3000 --name sicei-app sicei-app:%BUILD_ID%
